@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lease Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+    :root {
+      --bg1: #e3fbe4;
+      --bg2: #c5f2d1;
+      --main: #a8e6cf;
+      --accent: #56c596;
+      --dark: #2a5a3e;
+      --white: #fff;
+      --glass: rgba(255, 255, 255, 0.75);
+      --shadow: 0 20px 50px rgba(86, 197, 150, 0.2);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      animation: floatBg 6s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 100%; }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+      background: var(--glass);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--main);
+      animation: floatCard 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatCard {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-6px); }
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--dark);
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px 14px 42px;
+      border: 1px solid var(--main);
+      border-radius: 14px;
+      font-size: 1rem;
+      color: var(--dark);
+      background: #fafffb;
+      transition: var(--transition);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+      outline: none;
+      transform: scale(1.01);
+    }
+
+    .form-group label {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      background: var(--glass);
+      padding: 0 6px;
+      font-size: 0.85rem;
+      color: #4d6b56;
+      transition: var(--transition);
+    }
+
+    .form-group::before {
+      content: '✦';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    textarea {
+      min-height: 90px;
+    }
+
+    select {
+      appearance: none;
+      background: #fafffb url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMmE1YTNlIiB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMTUuMTdMMTguMTcgOGwxLjQxIDEuNDFMMTIgMTguMThMNC40MiA5LjQxbDEuNDEtMS40MUwxMiAxNS4xN3oiLz48L3N2Zz4=") no-repeat right 14px center;
+      background-size: 16px;
+      padding: 14px 40px 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--accent);
+      transition: var(--transition);
+      font-size: 1rem;
+      color: var(--dark);
+    }
+
+    input[type="file"] {
+      padding: 8px 12px;
+    }
+
+    input[type="checkbox"] {
+      accent-color: var(--accent);
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 180px;
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 8px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; 
+      left: 50%;
+      margin-left: -90px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.75rem;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    button {
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--main));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 8px 18px rgba(86, 197, 150, 0.35);
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #3fb88e, #88e8c2);
+      transform: scale(1.04);
+    }
+
+    .sub-options {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    #wallet_display {
+      margin-top: 10px;
+      background: #f1fdf4;
+      border: 1px dashed var(--accent);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: var(--dark);
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>🌿 Lease Your Dream Land</h2>
+    <form>
+      <!-- Personal Details -->
+      <div class="section">
+        <div class="form-group">
+          <input type="text" name="buyer_name" placeholder=" " required />
+          <label>👤 Full Name</label>
+        </div>
+        <div class="form-group">
+          <input type="tel" name="contact" placeholder=" " required />
+          <label>📞 Contact Number</label>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder=" " />
+          <label>📧 Email Address</label>
+        </div>
+        <div class="form-group">
+          <textarea name="address" placeholder=" "></textarea>
+          <label>🏠 Address</label>
+        </div>
+      </div>
+
+      <!-- Land Info -->
+      <div class="section">
+        <div class="form-group">
+          <input type="text" name="property_title" placeholder=" " required />
+          <label>📌 Property Title</label>
+        </div>
+        <div class="form-group">
+          <input type="text" name="location" placeholder=" " required />
+          <label>📍 Location</label>
+        </div>
+        <div class="form-group">
+          <input type="text" name="area" placeholder=" " required />
+          <label>📐 Land Area</label>
+        </div>
+        <div class="form-group">
+          <input type="text" name="price" placeholder=" " required />
+          <label>💸 Lease Price</label>
+        </div>
+      </div>
+
+      <!-- Payment -->
+      <div class="section">
+        <div class="form-group">
+          <select name="payment_method" id="payment_method" required onchange="toggleOptions()">
+            <option value="">💳 Choose Payment Method</option>
+            <option value="bank">🏦 Bank Transfer</option>
+            <option value="crypto">🪙 Crypto</option>
+            <option value="cash">💵 Cash</option>
+          </select>
+          <label>💳 Payment Method</label>
+        </div>
+
+        <!-- BANK OPTIONS -->
+        <div class="sub-options" id="bank_options">
+          <div class="form-group">
+            <select name="bank_option" required>
+              <option value="">🏦 Select Your Bank</option>
+              <option value="sbi">🟦 State Bank of India (SBI)</option>
+              <option value="icici">🟠 ICICI Bank</option>
+              <option value="hdfc">🔵 HDFC Bank</option>
+              <option value="axis">🟣 AXIS Bank</option>
+            </select>
+            <label>🏦 Choose Bank</label>
+          </div>
+        </div>
+
+        <!-- CRYPTO OPTIONS -->
+        <div class="sub-options" id="crypto_options">
+          <div class="form-group">
+            <select name="crypto_option" id="crypto_option" required onchange="showWallet()">
+              <option value="">🪙 Select Crypto</option>
+              <option value="btc">₿ Bitcoin (BTC)</option>
+              <option value="eth">Ξ Ethereum (ETH)</option>
+              <option value="usdt">💲 Tether (USDT)</option>
+            </select>
+            <label>🪙 Choose Crypto</label>
+          </div>
+          <div id="wallet_display"></div>
+        </div>
+
+        <!-- CASH OPTION -->
+        <div class="sub-options" id="cash_options">
+          <p>💵 Please be ready with physical cash. Our agent will contact you for pickup.</p>
+        </div>
+
+        <label>📑 Upload Payment Proof</label>
+        <input type="file" name="payment_proof">
+      </div>
+
+      <!-- Agreement -->
+      <div class="section">
+        <label class="tooltip">
+          <input type="checkbox" required>
+          ✅ I agree to the Terms
+          <span class="tooltiptext">Ensure all fields are correct before submitting</span>
+        </label>
+      </div>
+
+      <button type="submit">🌱 Lease Now</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleOptions() {
+      const value = document.getElementById("payment_method").value;
+      document.getElementById("bank_options").classList.remove("active");
+      document.getElementById("crypto_options").classList.remove("active");
+      document.getElementById("cash_options").classList.remove("active");
+
+      if (value === "bank") {
+        document.getElementById("bank_options").classList.add("active");
+      } else if (value === "crypto") {
+        document.getElementById("crypto_options").classList.add("active");
+      } else if (value === "cash") {
+        document.getElementById("cash_options").classList.add("active");
+      }
+    }
+
+    function showWallet() {
+      const crypto = document.getElementById("crypto_option").value;
+      const walletDisplay = document.getElementById("wallet_display");
+
+      let wallet = "";
+      if (crypto === "btc") {
+        wallet = "bc1qhcf2v8sm5umap3uvmuqm8c3fl6aqhypptm078u";
+      } else if (crypto === "eth" || crypto === "usdt") {
+        wallet = "0xcB9ffFa32f4C6EEdD0F7D8311eda772B96307426";
+      }
+
+      if (wallet) {
+        walletDisplay.style.display = "block";
+        walletDisplay.innerText = ${crypto.toUpperCase()} Wallet: ${wallet};
+      } else {
+        walletDisplay.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
